@@ -10,8 +10,12 @@ ApplicationWindow {
 
     ScrollView {
         anchors.fill: parent
-        Label {
+
+        TextEdit {
+            anchors.fill: parent
+            readOnly: true
             text: _infoAgent.getInfo()
+            selectByMouse: true
         }
     }
 }
