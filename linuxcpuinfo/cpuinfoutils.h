@@ -1,6 +1,6 @@
 #ifndef CPUINFOUTILS_H
 #define CPUINFOUTILS_H
-#include <QString>
+class QString;
 
 namespace CpuInfoUtils {
 /**
