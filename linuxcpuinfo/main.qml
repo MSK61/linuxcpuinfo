@@ -11,7 +11,6 @@ ApplicationWindow {
     ScrollView {
         anchors.fill: parent
         Label {
-            id: lblInfo
             text: _infoAgent.getInfo()
         }
     }
