@@ -30,9 +30,21 @@ ApplicationWindow {
                 }
 
                 Text {
-                    text: (index < 0) ? "" : ("processor #" + index)
+                    text: (index < 0) ?
+                              "" : ("processor #" + getProcessorNum(index))
                     anchors.verticalCenter: parent.verticalCenter
                     font.bold: true
+
+                    function getProcessorNum(viewIndex) {
+                        var found = modelData.find(function(prop) {
+
+                            return prop.name === "processor";
+
+                        });
+
+                        return found ? found.value : viewIndex;
+
+                    }
                 }
             }
 
