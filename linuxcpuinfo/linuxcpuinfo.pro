@@ -3,7 +3,9 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    cpuinfoutils.cpp
+    cpuinfoutils.cpp \
+    modelservices.cpp \
+    propertyinfo.cpp
 
 RESOURCES += qml.qrc
 
@@ -30,4 +32,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    cpuinfoutils.h
+    cpuinfoutils.h \
+    modelservices.h \
+    propertyinfo.h

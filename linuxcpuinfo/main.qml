@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Controls 1.4
 import QtQuick.Controls 2.2
 
 ApplicationWindow {
@@ -44,25 +45,39 @@ ApplicationWindow {
         ScrollBar.vertical: ScrollBar {
             policy: ScrollBar.AsNeeded
         }
-        onCurrentIndexChanged:
-            txtCpuInfo.text = (currentIndex < 0) ? "" : model[currentIndex]
+        onCurrentIndexChanged: tblCpuInfo.model = (currentIndex < 0) ?
+                                   emptyModel : model[currentIndex]
         highlight: Rectangle {
             color: "lightsteelblue"
             radius: 5
         }
+
+        ListModel {
+            id: emptyModel
+        }
     }
 
-    ScrollView {
+    TableView {
+        id: tblCpuInfo
+        headerVisible: false
         anchors.left: lstProcessors.right
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.top: parent.top
-
-        TextEdit {
-            id: txtCpuInfo
-            anchors.fill: parent
+        itemDelegate: TextInput {
+            text: styleData.value
             readOnly: true
             selectByMouse: true
+        }
+
+        TableViewColumn {
+            id: propNameCol
+            role: "name"
+        }
+
+        TableViewColumn {
+            role: "value"
+            width: tblCpuInfo.width - propNameCol.width
         }
     }
 }

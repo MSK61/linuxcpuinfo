@@ -1,8 +1,12 @@
+#include "cpuinfoutils.h"
 #include <QFile>
+#include <QLinkedList>
 #include <QRegularExpression>
 #include <QTextStream>
 
 namespace {
+using CpuInfoUtils::CoreDefinition;
+
 /**
  * @brief Retreives information about all cores from the underlying OS
  *
@@ -18,58 +22,84 @@ QString GetAllCores(void)
 }
 
 /**
- * @brief Updates the list of cores
+ * @brief Appends a new property to the given property list
  *
- * @param cores      core list
- * @param globalDesc unified description of all cores
- * @param start      start index in the unified description of the core to add
- * @param end        end index in the unified description of the core to add
+ * @param props property list to append the new property to
+ * @param name  new property name
+ * @param val   new property value
  */
-void UpdateCores(QStringList& cores, const QString& globalDesc, int start, int end)
+void AppendPropDef(
+        CoreDefinition &props, const QString &name, const QString &val)
 {
 
-    if (start >= 0) cores.append(globalDesc.mid(start, end - start));
+    props.append(CpuInfoUtils::CoreProperty(
+                     name, (val.isNull()) ? QStringLiteral("") : val));
 
 }
 
 /**
- * @brief Handles a new core definition start
+ * @brief Handles a property definition
  *
- * @param cores      core list
- * @param globalDesc unified description of all cores
- * @param prevStart  start index in the unified description of the previous core
- * @param curStart   start index in the unified description of the new core
- * @return           @p curStart
+ * @param cores     core list
+ * @param propMatch property match record
  */
-int HandleCoreStart(QStringList& cores, const QString& globalDesc,
-                    int prevStart, int curStart)
+void HandleProp(QLinkedList<CoreDefinition> &cores,
+                const QRegularExpressionMatch& propMatch)
 {
+    // property part indices
+    static const int nameGroupIndex = 1;
+    static const int valGroupIndex = 2;
+    const QString propName = propMatch.captured(nameGroupIndex);
 
-    UpdateCores(cores, globalDesc, prevStart, curStart);
-    return curStart;
+    if (propName == QStringLiteral("processor")) cores.append(CoreDefinition());
+
+    if (!cores.isEmpty()) AppendPropDef(
+                cores.last(), propName, propMatch.captured(valGroupIndex));
 
 }
 }
 
 namespace CpuInfoUtils {
-QStringList SplitCores(const QString& unifiedDesc)
+CoreProperty::CoreProperty(const QString& name, const QString& value) :
+    itsName(name), itsValue(value)
 {
-    QStringList cores;
+}
+
+bool CoreProperty::operator==(const CoreProperty& rhs) const
+{
+
+    return itsName == rhs.GetName() && itsValue == rhs.GetValue();
+
+}
+
+const QString& CoreProperty::GetName(void) const
+{
+
+    return itsName;
+
+}
+
+const QString& CoreProperty::GetValue(void) const
+{
+
+    return itsValue;
+
+}
+
+QLinkedList<CoreDefinition> SplitCores(const QString& unifiedDesc)
+{
+    QLinkedList<CoreDefinition> cores;
     QRegularExpressionMatchIterator matches = QRegularExpression(
-                QStringLiteral("^processor[[:blank:]]*: \\d+[[:blank:]]*$"),
+                QStringLiteral("^(.*\\w)[[:blank:]]*:(?: (.*\\w)?)?"),
                 QRegularExpression::MultilineOption).globalMatch(unifiedDesc);
-    int start = -1;
 
-    while (matches.hasNext())
-        start = HandleCoreStart(
-                    cores, unifiedDesc, start, matches.next().capturedStart());
+    while (matches.hasNext()) HandleProp(cores, matches.next());
 
-    UpdateCores(cores, unifiedDesc, start, unifiedDesc.size());
     return cores;
 
 }
 
-QStringList GetCpuInfo(void)
+QLinkedList<CoreDefinition> GetCpuInfo(void)
 {
 
     return SplitCores(GetAllCores());

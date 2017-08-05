@@ -1,6 +1,7 @@
 #include "cpuinfoutils.h"
 #include <gtest/gtest.h>
-#include <QStringList>
+#include <QLinkedList>
+using CpuInfoUtils::CoreDefinition;
 using namespace testing;
 
 /**
@@ -8,8 +9,14 @@ using namespace testing;
  */
 struct SplitTestRec
 {
+    /**
+     * @brief Unified text description for all cores
+     */
     QString unifiedTxt;
-    QStringList coreDefs;
+    /**
+     * @brief Lists of core properties
+     */
+    QLinkedList<CoreDefinition> coreDefs;
 };
 
 /**
@@ -20,16 +27,18 @@ class SplitTest : public TestWithParam<SplitTestRec>
 };
 
 namespace {
+using CpuInfoUtils::CoreProperty;
+
 /**
  * @brief Data of all core splitting tests
  */
-static const SplitTestRec splitTests[] =
-        {{QStringLiteral(""), QStringList()},
-         {"processor\t: 0", QStringList(QStringLiteral("processor\t: 0"))},
-         {QStringLiteral("vendor_id\t: GenuineIntel"), QStringList()},
-         {QStringLiteral("processor\t: 0\nvendor_id\t: GenuineIntel"),
-          QStringList(
-          QStringLiteral("processor\t: 0\nvendor_id\t: GenuineIntel"))}};
+static const SplitTestRec splitTests[] = {
+    {QStringLiteral(""), QLinkedList<CoreDefinition>()},
+    {"processor\t: 0", {{CoreProperty("processor", "0")}}},
+    {QStringLiteral("vendor_id\t: GenuineIntel"), QLinkedList<CoreDefinition>(
+     )}, {QStringLiteral("processor\t: 0\nvendor_id\t: GenuineIntel"),
+          {{CoreProperty("processor", "0"),
+            CoreProperty("vendor_id", "GenuineIntel")}}}};
 }
 
 TEST_P(SplitTest, run)
