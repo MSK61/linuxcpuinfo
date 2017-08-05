@@ -25,9 +25,9 @@ protected:
     /**
      * @brief Retreives CPU information from the underlying OS
      *
-     * @return CPU text description
+     * @return CPU text descriptions
      */
-    Q_INVOKABLE static QString getInfo(void);
+    Q_INVOKABLE static QStringList getProcessors(void);
 };
 }
 #endif // CPUINFOTELLER_H

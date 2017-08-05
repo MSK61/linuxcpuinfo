@@ -1,13 +1,21 @@
 #ifndef CPUINFOUTILS_H
 #define CPUINFOUTILS_H
 class QString;
+class QStringList;
 
 namespace CpuInfoUtils {
 /**
- * @brief Retreives CPU information from the underlying OS
+ * @brief Retreives core descriptions from the underlying OS
  *
- * @return CPU text description
+ * @return text descriptions for all cores
  */
-QString GetCpuInfo(void);
+QStringList GetCpuInfo(void);
+/**
+ * @brief Splits cores from the unified text description
+ *
+ * @param unifiedDesc unified text description for all cores
+ * @return            list of core text descriptions
+ */
+QStringList SplitCores(const QString& unifiedDesc);
 }
 #endif // CPUINFOUTILS_H

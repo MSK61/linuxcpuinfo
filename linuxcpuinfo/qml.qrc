@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>SMD Generic TQFP32 Package.svg</file>
     </qresource>
 </RCC>

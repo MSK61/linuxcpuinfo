@@ -7,7 +7,7 @@ CpuInfoTeller::CpuInfoTeller(QObject *parent) : QObject(parent)
 
 }
 
-QString CpuInfoTeller::getInfo(void)
+QStringList CpuInfoTeller::getProcessors(void)
 {
 
     return GetCpuInfo();
