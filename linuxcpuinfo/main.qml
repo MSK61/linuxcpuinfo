@@ -14,7 +14,7 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.top: parent.top
-        model: _infoAgent.getProcessors()
+        model: cores
         delegate: Item {
             x: 5
             width: ListView.view.width
