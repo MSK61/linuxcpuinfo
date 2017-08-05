@@ -24,9 +24,9 @@ namespace {
  * @brief Data of all core splitting tests
  */
 static const SplitTestRec splitTests[] =
-        {{QStringLiteral(""), {}},
+        {{QStringLiteral(""), QStringList()},
          {"processor\t: 0", QStringList(QStringLiteral("processor\t: 0"))},
-         {QStringLiteral("vendor_id\t: GenuineIntel"), {}},
+         {QStringLiteral("vendor_id\t: GenuineIntel"), QStringList()},
          {QStringLiteral("processor\t: 0\nvendor_id\t: GenuineIntel"),
           QStringList(
           QStringLiteral("processor\t: 0\nvendor_id\t: GenuineIntel"))}};
