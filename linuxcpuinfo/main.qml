@@ -80,6 +80,7 @@ ApplicationWindow {
             text: styleData.value
             readOnly: true
             selectByMouse: true
+            autoScroll: false
         }
 
         TableViewColumn {
