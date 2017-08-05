@@ -14,6 +14,6 @@ QVariantList GetProcessors(void);
  *
  * @param coreLst list of cores to delete whose properties
  */
-void DeleteCoreList(const QVariantList& coreLst);
+void DeleteCoreList(const QVariantList &coreLst);
 }
 #endif // MODELSERVICES_H

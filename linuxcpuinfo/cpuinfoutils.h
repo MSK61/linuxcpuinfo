@@ -15,26 +15,26 @@ public:
      * @param name  property name
      * @param value property value
      */
-    CoreProperty(const QString& name, const QString& value);
+    CoreProperty(const QString &name, const QString &value);
     /**
      * @brief Tests CoreProperty equality
      *
      * @param rhs right-hand side property
      * @return    true if the two properties are equal, otherwise false
      */
-    bool operator==(const CoreProperty& rhs) const;
+    bool operator==(const CoreProperty &rhs) const;
     /**
      * @brief Retrieves the property name
      *
      * @return property name
      */
-    const QString& GetName(void) const;
+    const QString &GetName(void) const;
     /**
      * @brief Retrieves the property value
      *
      * @return property value
      */
-    const QString& GetValue(void) const;
+    const QString &GetValue(void) const;
 private:
     /**
      * @brief Property name
@@ -62,6 +62,6 @@ QLinkedList<CoreDefinition> GetCpuInfo(void);
  * @param unifiedDesc unified text description for all cores
  * @return            list of core text descriptions
  */
-QLinkedList<CoreDefinition> SplitCores(const QString& unifiedDesc);
+QLinkedList<CoreDefinition> SplitCores(const QString &unifiedDesc);
 }
 #endif // CPUINFOUTILS_H

@@ -44,7 +44,7 @@ void AppendPropDef(
  * @param propMatch property match record
  */
 void HandleProp(QLinkedList<CoreDefinition> &cores,
-                const QRegularExpressionMatch& propMatch)
+                const QRegularExpressionMatch &propMatch)
 {
     // property part indices
     static const int nameGroupIndex = 1;
@@ -60,33 +60,33 @@ void HandleProp(QLinkedList<CoreDefinition> &cores,
 }
 
 namespace CpuInfoUtils {
-CoreProperty::CoreProperty(const QString& name, const QString& value) :
+CoreProperty::CoreProperty(const QString &name, const QString &value) :
     itsName(name), itsValue(value)
 {
 }
 
-bool CoreProperty::operator==(const CoreProperty& rhs) const
+bool CoreProperty::operator==(const CoreProperty &rhs) const
 {
 
     return itsName == rhs.GetName() && itsValue == rhs.GetValue();
 
 }
 
-const QString& CoreProperty::GetName(void) const
+const QString &CoreProperty::GetName(void) const
 {
 
     return itsName;
 
 }
 
-const QString& CoreProperty::GetValue(void) const
+const QString &CoreProperty::GetValue(void) const
 {
 
     return itsValue;
 
 }
 
-QLinkedList<CoreDefinition> SplitCores(const QString& unifiedDesc)
+QLinkedList<CoreDefinition> SplitCores(const QString &unifiedDesc)
 {
     QLinkedList<CoreDefinition> cores;
     QRegularExpressionMatchIterator matches = QRegularExpression(

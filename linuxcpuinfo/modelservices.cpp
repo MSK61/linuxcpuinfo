@@ -13,7 +13,7 @@ using ModelServices::PropertyInfo;
  * @param core core to retrieve whose properties
  * @return     core properties
  */
-QObjectList GetCoreProps(const CoreDefinition& core)
+QObjectList GetCoreProps(const CoreDefinition &core)
 {
     QObjectList coreProps;
 
@@ -32,7 +32,7 @@ QObjectList GetCoreProps(const CoreDefinition& core)
  *
  * @param core core to delete whose properties
  */
-void DeleteCoreProps(const QVariantList& core)
+void DeleteCoreProps(const QVariantList &core)
 {
 
     foreach (const QVariant &curProp, core)
@@ -57,7 +57,7 @@ QVariantList GetProcessors(void)
 
 }
 
-void DeleteCoreList(const QVariantList& coreLst)
+void DeleteCoreList(const QVariantList &coreLst)
 {
 
     foreach (const QVariant &curCore, coreLst)

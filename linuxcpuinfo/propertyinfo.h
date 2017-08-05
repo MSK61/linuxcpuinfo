@@ -18,7 +18,7 @@ public:
      * @param propValue property value
      * @param parent    parent object
      */
-    explicit PropertyInfo(const QString& propName, const QString& propValue,
+    explicit PropertyInfo(const QString &propName, const QString &propValue,
                           QObject *parent = nullptr);
     Q_PROPERTY(QString name READ GetName CONSTANT)
     Q_PROPERTY(QString value READ GetValue CONSTANT)
@@ -31,13 +31,13 @@ private:
      *
      * @return property name
      */
-    const QString& GetName(void) const;
+    const QString &GetName(void) const;
     /**
      * @brief Retrieves the property value
      *
      * @return property value
      */
-    const QString& GetValue(void) const;
+    const QString &GetValue(void) const;
     /**
      * @brief Property name
      */
