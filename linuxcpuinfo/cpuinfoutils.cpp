@@ -60,6 +60,10 @@ void HandleProp(QLinkedList<CoreDefinition> &cores,
 }
 
 namespace CpuInfoUtils {
+CoreProperty::CoreProperty()
+{
+}
+
 CoreProperty::CoreProperty(const QString &name, const QString &value) :
     itsName(name), itsValue(value)
 {

@@ -10,6 +10,10 @@ class CoreProperty
 {
 public:
     /**
+     * @brief Initializes an empty core property
+     */
+    CoreProperty();
+    /**
      * @brief Initializes this core property
      *
      * @param name  property name

@@ -2,26 +2,27 @@
 #include "propertyinfo.h"
 #include <QLinkedList>
 #include <QVariant>
+#include <QVector>
 using CpuInfoUtils::CoreDefinition;
 
 namespace {
+using CpuInfoUtils::CoreProperty;
 using ModelServices::PropertyInfo;
 
 /**
- * @brief Retrieves the core properties
+ * @brief Copies the given property vector into a new list
  *
- * @param core core to retrieve whose properties
- * @return     core properties
+ * @param propVec property vector to copy
+ * @return        new property list
  */
-QObjectList GetCoreProps(const CoreDefinition &core)
+QObjectList CreatePropList(const QVector<CoreProperty> &propVec)
 {
     QObjectList coreProps;
 
-    coreProps.reserve(core.size());
+    coreProps.reserve(propVec.size());
 
-    foreach (const CpuInfoUtils::CoreProperty &curProp, core)
-        coreProps.append(
-                    new PropertyInfo(curProp.GetName(), curProp.GetValue()));
+    foreach (const CoreProperty &curProp, propVec) coreProps.append(
+                new PropertyInfo(curProp.GetName(), curProp.GetValue()));
 
     return coreProps;
 
@@ -37,6 +38,42 @@ void DeleteCoreProps(const QVariantList &core)
 
     foreach (const QVariant &curProp, core)
         delete curProp.value<PropertyInfo*>();
+
+}
+
+/**
+ * @brief Sore core properties
+ *
+ * @param core core to sort whose properties
+ * @return     sorted properties
+ */
+QVector<CoreProperty> SortProps(const CoreDefinition &core)
+{
+    QVector<CoreProperty> sortedProps;
+
+    sortedProps.reserve(core.size());
+    std::copy(core.cbegin(), core.cend(), std::back_inserter(sortedProps));
+    std::sort(sortedProps.begin(), sortedProps.end(),
+              [](const CoreProperty &lhs, const CoreProperty &rhs)
+    {
+
+        return lhs.GetName() < rhs.GetName();
+
+    });
+    return sortedProps;
+
+}
+
+/**
+ * @brief Retrieves the core properties
+ *
+ * @param core core to retrieve whose properties
+ * @return     core properties sorted by property name
+ */
+QObjectList GetCoreProps(const CoreDefinition &core)
+{
+
+    return CreatePropList(SortProps(core));
 
 }
 }
