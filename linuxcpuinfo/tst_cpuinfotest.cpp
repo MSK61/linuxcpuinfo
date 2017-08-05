@@ -26,7 +26,7 @@ namespace {
 static const SplitTestRec splitTests[] =
         {{QStringLiteral(""), {}},
          {"processor\t: 0", QStringList(QStringLiteral("processor\t: 0"))},
-         {QStringLiteral("vendor_id\t: GenuineIntel"),{}},
+         {QStringLiteral("vendor_id\t: GenuineIntel"), {}},
          {QStringLiteral("processor\t: 0\nvendor_id\t: GenuineIntel"),
           QStringList(
           QStringLiteral("processor\t: 0\nvendor_id\t: GenuineIntel"))}};
