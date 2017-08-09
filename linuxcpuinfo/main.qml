@@ -58,12 +58,7 @@ ApplicationWindow {
         }
         onCurrentIndexChanged: if (currentIndex < 0)
                                    tblCpuInfo.model = emptyModel;
-                               else {
-
-                                   tblCpuInfo.model = model[currentIndex];
-                                   tblCpuInfo.resizeColumnsToContents();
-
-                               }
+                               else changeProcessor();
         highlight: Rectangle {
             color: "lightsteelblue"
             radius: 5
@@ -71,6 +66,13 @@ ApplicationWindow {
 
         ListModel {
             id: emptyModel
+        }
+
+        function changeProcessor() {
+
+            tblCpuInfo.model = model[currentIndex];
+            tblCpuInfo.resizeColumnsToContents();
+
         }
     }
 
