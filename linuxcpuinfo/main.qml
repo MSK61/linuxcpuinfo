@@ -56,8 +56,14 @@ ApplicationWindow {
         ScrollBar.vertical: ScrollBar {
             policy: ScrollBar.AsNeeded
         }
-        onCurrentIndexChanged: tblCpuInfo.model = (currentIndex < 0) ?
-                                   emptyModel : model[currentIndex]
+        onCurrentIndexChanged: if (currentIndex < 0)
+                                   tblCpuInfo.model = emptyModel;
+                               else {
+
+                                   tblCpuInfo.model = model[currentIndex];
+                                   tblCpuInfo.resizeColumnsToContents();
+
+                               }
         highlight: Rectangle {
             color: "lightsteelblue"
             radius: 5
@@ -83,13 +89,11 @@ ApplicationWindow {
         }
 
         TableViewColumn {
-            id: propNameCol
             role: "name"
         }
 
         TableViewColumn {
             role: "value"
-            width: tblCpuInfo.width - propNameCol.width
         }
     }
 }
